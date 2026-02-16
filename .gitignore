@@ -16,8 +16,9 @@ desktop.ini
 *.log
 
 # Node modules (si decides agregar npm en el futuro)
+# node me ayuda a gestionar dependencias, pero no es necesario para este proyecto ya que es un proyecto simple de HTML, CSS y JavaScript sin frameworks ni librerías externas. 
 node_modules/
 
-# Archivos personales (descomenta si no quieres subir las imágenes originales)
-imagenes/*.jpg
-imagenes/*.png
+# Archivos personales (están comentadas para que SÍ se suban a GitHub)
+# imagenes/*.jpg
+# imagenes/*.png

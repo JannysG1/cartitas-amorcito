@@ -61,6 +61,90 @@ header h1 {
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
+/* Cronómetro */
+.cronometro-container {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    margin-top: 20px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    animation: slideDown 0.5s ease;
+}
+
+.cronometro-titulo {
+    color: #ff6b9d;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-bottom: 15px;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.cronometro {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.tiempo-bloque {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 100%);
+    padding: 15px 20px;
+    border-radius: 12px;
+    min-width: 80px;
+    box-shadow: 0 4px 10px rgba(255, 107, 157, 0.3);
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.tiempo-numero {
+    color: white;
+    font-size: 2em;
+    font-weight: bold;
+    line-height: 1;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.tiempo-label {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.7em;
+    margin-top: 5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.tiempo-separador {
+    color: #ff6b9d;
+    font-size: 2em;
+    font-weight: bold;
+    padding: 0 5px;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.02);
+    }
+}
+
 /* Grid de cartas */
 main {
     flex: 1;
@@ -112,7 +196,7 @@ main {
 .carta-icono {
     width: 140px;
     height: 140px;
-    background-image: url('../imagenes/icono-carta.png');
+    background-image: url('../imagenes/icono_carta.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
@@ -128,7 +212,7 @@ main {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 3em;
+    font-size: 2em;
     text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 
@@ -333,6 +417,33 @@ footer p {
         font-size: 1em;
     }
 
+    .cronometro-container {
+        padding: 15px;
+        margin-top: 15px;
+    }
+
+    .cronometro-titulo {
+        font-size: 1em;
+        margin-bottom: 10px;
+    }
+
+    .tiempo-bloque {
+        padding: 10px 15px;
+        min-width: 70px;
+    }
+
+    .tiempo-numero {
+        font-size: 1.6em;
+    }
+
+    .tiempo-label {
+        font-size: 0.6em;
+    }
+
+    .tiempo-separador {
+        font-size: 1.6em;
+    }
+
     main {
         grid-template-columns: repeat(2, 1fr);
         gap: 25px;
@@ -370,6 +481,38 @@ footer p {
         font-size: 1.6em;
     }
 
+    .cronometro-container {
+        padding: 12px;
+        margin-top: 12px;
+    }
+
+    .cronometro-titulo {
+        font-size: 0.9em;
+        margin-bottom: 8px;
+    }
+
+    .cronometro {
+        gap: 5px;
+    }
+
+    .tiempo-bloque {
+        padding: 8px 10px;
+        min-width: 60px;
+    }
+
+    .tiempo-numero {
+        font-size: 1.3em;
+    }
+
+    .tiempo-label {
+        font-size: 0.55em;
+    }
+
+    .tiempo-separador {
+        font-size: 1.3em;
+        padding: 0 2px;
+    }
+
     main {
         grid-template-columns: repeat(2, 1fr);
         gap: 20px;
@@ -396,6 +539,6 @@ footer p {
     }
 
     .carta-item.bloqueada .carta-icono::after {
-        font-size: 2.5em;
+        font-size: 1.5em;
     }
 }

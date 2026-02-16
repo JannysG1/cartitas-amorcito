@@ -9,12 +9,12 @@
   "orientation": "portrait",
   "icons": [
     {
-      "src": "imagenes/icono-carta.png",
+      "src": "imagenes/icono_carta.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "imagenes/icono-carta.png",
+      "src": "imagenes/icono_carta.png",
       "sizes": "512x512",
       "type": "image/png"
     }

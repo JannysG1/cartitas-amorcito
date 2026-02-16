@@ -7,7 +7,7 @@ const urlsToCache = [
   'css/Carta.css',
   'js/cartas.js',
   'imagenes/fondo-mario.jpg',
-  'imagenes/icono-carta.png'
+  'imagenes/icono_carta.png'
 ];
 
 // Instalación del Service Worker

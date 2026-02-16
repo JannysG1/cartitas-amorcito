@@ -10,7 +10,7 @@
     <title>Cartitas para mi Amorcito Precioso💕</title>
     <link rel="stylesheet" href="../css/Pagina_Principal.css">
     <link rel="manifest" href="../manifest.json">
-    <link rel="apple-touch-icon" href="../imagenes/icono-carta.png">
+    <link rel="apple-touch-icon" href="../imagenes/icono_carta.png">
 </head>
 <body>
     <div class="container">
@@ -18,6 +18,27 @@
             <h1>💌 Cartitas para mi Precioso 💌</h1>
             <p class="subtitle">Toca un sobre para leer tu mensaje especial. Solo se puede abrir una por día, pero una vez abierta puedes abrirla cuando quieras. Existen cartas especiales que solo se abren a partir de su fecha específica y cartas que podras leer en cualquier momento.</p>
             <p class="subtitle">¡Espero que estas cartitas te alegren el día tanto como a mí me alegra hacerlas para ti! 💕</p>
+            
+            <!-- Cronómetro para próxima carta -->
+            <div class="cronometro-container" id="cronometroContainer">
+                <div class="cronometro-titulo">⏰ Próxima carta disponible en:</div>
+                <div class="cronometro" id="cronometro">
+                    <div class="tiempo-bloque">
+                        <span class="tiempo-numero" id="horas">00</span>
+                        <span class="tiempo-label">Horas</span>
+                    </div>
+                    <div class="tiempo-separador">:</div>
+                    <div class="tiempo-bloque">
+                        <span class="tiempo-numero" id="minutos">00</span>
+                        <span class="tiempo-label">Minutos</span>
+                    </div>
+                    <div class="tiempo-separador">:</div>
+                    <div class="tiempo-bloque">
+                        <span class="tiempo-numero" id="segundos">00</span>
+                        <span class="tiempo-label">Segundos</span>
+                    </div>
+                </div>
+            </div>
         </header>
 
         <main class="cartas-grid" id="cartasGrid">
@@ -51,6 +72,76 @@
             }
         }
 
+        // Actualizar cronómetro
+        function actualizarCronometro() {
+            console.log('🕐 Actualizando cronómetro...');
+            const cronometroContainer = document.getElementById('cronometroContainer');
+            const cronometroTitulo = document.querySelector('.cronometro-titulo');
+            
+            console.log('Cronómetro container:', cronometroContainer);
+            
+            // Siempre mostrar el cronómetro
+            if (cronometroContainer) {
+                cronometroContainer.style.display = 'block';
+                cronometroContainer.style.visibility = 'visible';
+                cronometroContainer.style.opacity = '1';
+                console.log('✅ Cronómetro forzado a visible');
+            } else {
+                console.error('❌ No se encontró el contenedor del cronómetro');
+            }
+
+            // Verificar si ya abrió carta hoy
+            let yaAbrioHoy = false;
+            if (typeof Storage !== 'undefined' && typeof Storage.yaSeAbrioCartaHoy === 'function') {
+                yaAbrioHoy = Storage.yaSeAbrioCartaHoy();
+            }
+
+            // Cambiar el título según el estado
+            if (cronometroTitulo) {
+                if (yaAbrioHoy) {
+                    cronometroTitulo.textContent = '⏰ Próxima carta disponible en:';
+                } else {
+                    cronometroTitulo.textContent = '⏰ Nueva carta disponible en:';
+                }
+            }
+
+            // Calcular tiempo restante hasta medianoche
+            const ahora = new Date();
+            const medianoche = new Date();
+            medianoche.setHours(24, 0, 0, 0);
+            
+            const diferencia = medianoche - ahora;
+            
+            if (diferencia <= 0) {
+                // Si ya pasó medianoche, recargar página
+                location.reload();
+                return;
+            }
+
+            // Calcular horas, minutos y segundos
+            const horas = Math.floor(diferencia / (1000 * 60 * 60));
+            const minutos = Math.floor((diferencia % (1000 * 60 * 60)) / (1000 * 60));
+            const segundos = Math.floor((diferencia % (1000 * 60)) / 1000);
+
+            // Actualizar la interfaz
+            const horasEl = document.getElementById('horas');
+            const minutosEl = document.getElementById('minutos');
+            const segundosEl = document.getElementById('segundos');
+
+            if (horasEl) horasEl.textContent = String(horas).padStart(2, '0');
+            if (minutosEl) minutosEl.textContent = String(minutos).padStart(2, '0');
+            if (segundosEl) segundosEl.textContent = String(segundos).padStart(2, '0');
+            
+            console.log(`⏰ Tiempo restante: ${horas}:${minutos}:${segundos}`);
+        }
+
+        // Iniciar cronómetro
+        function iniciarCronometro() {
+            console.log('⏰ Iniciando cronómetro...');
+            actualizarCronometro();
+            setInterval(actualizarCronometro, 1000);
+        }
+
         // Mostrar modal en lugar de alert
         function mostrarMensajeBloqueo(razon) {
             const modal = document.getElementById('modalOverlay');
@@ -64,8 +155,13 @@
             modal.style.display = 'none';
         }
 
-        // Actualizar progreso al cargar
-        window.addEventListener('DOMContentLoaded', actualizarProgreso);
+        // Actualizar progreso y cronómetro al cargar
+        window.addEventListener('DOMContentLoaded', () => {
+            console.log('🚀 Página cargada - Inicializando...');
+            actualizarProgreso();
+            iniciarCronometro();
+            console.log('✅ Inicialización completa');
+        });
 
         // Registrar Service Worker para funcionalidad offline
         if ('serviceWorker' in navigator) {
