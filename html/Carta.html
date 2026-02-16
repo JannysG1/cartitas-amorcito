@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#ff6b9d">
+    <title>Mi Carta para Ti 💕</title>
+    <link rel="stylesheet" href="../css/Carta.css">
+    <link rel="manifest" href="../manifest.json">
+    <link rel="apple-touch-icon" href="../imagenes/icono-carta.png">
+</head>
+<body>
+    <div class="container">
+        <button class="btn-volver" onclick="volverInicio()">
+            ← Volver
+        </button>
+
+        <div class="carta-contenedor">
+            <div class="sobre-animacion" id="sobreAnimacion">
+                <div class="sobre-tapa"></div>
+                <div class="sobre-cuerpo"></div>
+                <div class="carta-dentro"></div>
+            </div>
+
+            <div class="carta-abierta" id="cartaAbierta">
+                <div class="carta-header">
+                    <h1 id="cartaTitulo">Carta #1</h1>
+                    <p class="fecha" id="cartaFecha"></p>
+                </div>
+
+                <div class="carta-contenido">
+                    <p class="saludo">Mi amorcito precioso 💕,</p>
+                    
+                    <div class="mensaje" id="cartaMensaje">
+                        <!-- El mensaje se cargará dinámicamente -->
+                    </div>
+
+                    <p class="despedida">Con todo mi amor,</p>
+                    <p class="firma">La personita que más te ama 💕</p>
+                </div>
+
+                <div class="decoracion">
+                    <span class="corazon">💖</span>
+                    <span class="corazon">💕</span>
+                    <span class="corazon">💗</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/cartas.js"></script>
+    <script>
+        // Animación de abrir sobre
+        window.addEventListener('DOMContentLoaded', () => {
+            const sobre = document.getElementById('sobreAnimacion');
+            const carta = document.getElementById('cartaAbierta');
+            
+            setTimeout(() => {
+                sobre.classList.add('abrir');
+                setTimeout(() => {
+                    sobre.style.display = 'none';
+                    carta.classList.add('mostrar');
+                }, 1500);
+            }, 500);
+            
+            cargarCarta();
+        });
+
+        function volverInicio() {
+            window.location.href = 'Pagina_Principal.html';
+        }
+
+        function cargarCarta() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const cartaId = parseInt(urlParams.get('id')) || 1;
+            
+            if (typeof cartas !== 'undefined' && cartas[cartaId - 1]) {
+                const carta = cartas[cartaId - 1];
+                
+                // Actualizar contenido
+                document.getElementById('cartaTitulo').textContent = carta.titulo;
+                document.getElementById('cartaFecha').textContent = carta.fecha || '';
+                document.getElementById('cartaMensaje').innerHTML = carta.mensaje;
+                
+                // Cambiar saludo según el tipo de carta
+                const saludoElement = document.querySelector('.saludo');
+                if (carta.tipo === 'especial') {
+                    saludoElement.textContent = 'Mi amor hermoso/a,';
+                } else {
+                    // Para cartas emocionales, saludo personalizado
+                    const saludos = {
+                        'triste': 'Mi amor, sé que estás pasando por un mal momento...',
+                        'duda': 'Mi amor,',
+                        'pelea': 'Mi amor,',
+                        'feliz': 'Mi amor hermoso/a,',
+                        'extrañar': 'Mi amor,',
+                        'motivacion': 'Mi amor increíble,',
+                        'amor': 'Mi amor,'
+                    };
+                    saludoElement.textContent = saludos[carta.emocion] || 'Mi amor,';
+                }
+                
+                // Actualizar despedida según tipo
+                const despedidaElement = document.querySelector('.despedida');
+                if (carta.tipo === 'especial') {
+                    despedidaElement.textContent = 'Con todo mi amor en este día especial,';
+                } else {
+                    despedidaElement.textContent = 'Con todo mi amor,';
+                }
+            }
+        }
+    </script>
+</body>
+</html>

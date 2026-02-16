@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#ff6b9d">
+    <title>Cartitas para mi Amorcito Precioso💕</title>
+    <link rel="stylesheet" href="../css/Pagina_Principal.css">
+    <link rel="manifest" href="../manifest.json">
+    <link rel="apple-touch-icon" href="../imagenes/icono-carta.png">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>💌 Cartitas para mi Precioso 💌</h1>
+            <p class="subtitle">Toca un sobre para leer tu mensaje especial. Solo se puede abrir una por día, pero una vez abierta puedes abrirla cuando quieras. Existen cartas especiales que solo se abren a partir de su fecha específica y cartas que podras leer en cualquier momento.</p>
+            <p class="subtitle">¡Espero que estas cartitas te alegren el día tanto como a mí me alegra hacerlas para ti! 💕</p>
+        </header>
+
+        <main class="cartas-grid" id="cartasGrid">
+            <!-- Las cartas se generarán dinámicamente con JavaScript -->
+        </main>
+
+        <footer>
+            <p>Hecho con amor 💕 mira tu progreso.</p>
+            <p class="progreso" id="progresoCartas"></p>
+        </footer>
+    </div>
+
+    <!-- Modal para mensajes -->
+    <div class="modal-overlay" id="modalOverlay" onclick="cerrarModal()">
+        <div class="modal-contenido" onclick="event.stopPropagation()">
+            <div class="modal-icono">🔒</div>
+            <h2 class="modal-titulo">Carta Bloqueada</h2>
+            <p class="modal-mensaje" id="modalMensaje"></p>
+            <button class="modal-btn" onclick="cerrarModal()">Entendido</button>
+        </div>
+    </div>
+
+    <script src="../js/cartas.js"></script>
+    <script>
+        // Actualizar progreso
+        function actualizarProgreso() {
+            const progresoDiv = document.getElementById('progresoCartas');
+            if (progresoDiv && typeof obtenerProgreso === 'function') {
+                const progreso = obtenerProgreso();
+                progresoDiv.textContent = `${progreso.abiertas} de ${progreso.total} cartas leídas (${progreso.porcentaje}%)`;
+            }
+        }
+
+        // Mostrar modal en lugar de alert
+        function mostrarMensajeBloqueo(razon) {
+            const modal = document.getElementById('modalOverlay');
+            const mensaje = document.getElementById('modalMensaje');
+            mensaje.textContent = razon;
+            modal.style.display = 'flex';
+        }
+
+        function cerrarModal() {
+            const modal = document.getElementById('modalOverlay');
+            modal.style.display = 'none';
+        }
+
+        // Actualizar progreso al cargar
+        window.addEventListener('DOMContentLoaded', actualizarProgreso);
+
+        // Registrar Service Worker para funcionalidad offline
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('../service-worker.js')
+                    .then(registration => {
+                        console.log('Service Worker registrado:', registration);
+                    })
+                    .catch(error => {
+                        console.log('Error al registrar Service Worker:', error);
+                    });
+            });
+        }
+    </script>
+</body>
+</html>

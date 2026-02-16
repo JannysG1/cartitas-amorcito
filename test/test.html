@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba de Cartas</title>
+    <style>
+        body { font-family: Arial; padding: 20px; background: #f0f0f0; }
+        .test-result { padding: 10px; margin: 10px 0; border-radius: 5px; }
+        .success { background: #d4edda; border: 1px solid #c3e6cb; color: #155724; }
+        .error { background: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; }
+        .info { background: #d1ecf1; border: 1px solid #bee5eb; color: #0c5460; }
+        button { padding: 10px 20px; margin: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>🧪 Prueba del Sistema de Cartas</h1>
+    
+    <div id="resultados"></div>
+    
+    <h2>Comandos de Prueba</h2>
+    <button onclick="probarGenerarCartas()">1. Probar Generar Cartas</button>
+    <button onclick="probarEstadoCartas()">2. Ver Estado de Todas las Cartas</button>
+    <button onclick="probarFechas()">3. Verificar Sistema de Fechas</button>
+    <button onclick="testCartas.verProgreso()">4. Ver Progreso</button>
+    <button onclick="testCartas.resetear(); location.reload()">5. Resetear Sistema</button>
+    <button onclick="abrirPaginaPrincipal()">6. Abrir Página Principal</button>
+    
+    <script src="../js/cartas.js"></script>
+    <script>
+        const resultadosDiv = document.getElementById('resultados');
+        
+        function log(mensaje, tipo = 'info') {
+            const div = document.createElement('div');
+            div.className = `test-result ${tipo}`;
+            div.innerHTML = mensaje;
+            resultadosDiv.insertBefore(div, resultadosDiv.firstChild);
+        }
+        
+        function probarGenerarCartas() {
+            log('🔄 Probando generación de cartas...', 'info');
+            
+            if (typeof cartas === 'undefined') {
+                log('❌ ERROR: Variable "cartas" no está definida', 'error');
+                return;
+            }
+            
+            log(`✅ Array de cartas cargado: ${cartas.length} cartas`, 'success');
+            
+            cartas.forEach(carta => {
+                log(`Carta #${carta.id}: ${carta.titulo} (${carta.tipo})`, 'info');
+            });
+        }
+        
+        function probarEstadoCartas() {
+            log('🔄 Verificando estado de todas las cartas...', 'info');
+            
+            cartas.forEach(carta => {
+                const estado = obtenerEstadoCarta(carta);
+                const icono = estado.estado === 'bloqueada' ? '🔒' : 
+                             estado.estado === 'abierta' ? '✅' : '🔓';
+                log(`${icono} Carta #${carta.id} (${carta.titulo}): ${estado.estado} - ${estado.razon}`, 
+                    estado.estado === 'bloqueada' ? 'error' : 'success');
+            });
+        }
+        
+        function probarFechas() {
+            log('🔄 Verificando sistema de fechas...', 'info');
+            
+            const fechaActual = obtenerFechaActual();
+            log(`📅 Fecha actual: ${fechaActual.dia}/${fechaActual.mes}/${fechaActual.año}`, 'info');
+            
+            const cartasEspeciales = cartas.filter(c => c.tipo === 'especial');
+            cartasEspeciales.forEach(carta => {
+                const desbloqueada = estaDesbloqueadaPorFecha(carta);
+                const icono = desbloqueada ? '✅' : '🔒';
+                log(`${icono} ${carta.titulo} (${carta.fecha}): ${desbloqueada ? 'Desbloqueada' : 'Bloqueada'}`, 
+                    desbloqueada ? 'success' : 'error');
+            });
+        }
+        
+        function abrirPaginaPrincipal() {
+            window.location.href = '../html/Pagina_Principal.html';
+        }
+        
+        // Ejecutar prueba inicial
+        window.addEventListener('DOMContentLoaded', () => {
+            log('🚀 Sistema de pruebas cargado', 'success');
+            log('👉 Haz clic en los botones para ejecutar las pruebas', 'info');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,401 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Comic Sans MS', 'Arial', sans-serif;
+    min-height: 100vh;
+    background-image: url('../imagenes/fondo-mario.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    overflow-x: hidden;
+}
+
+/* Overlay para mejorar legibilidad */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(2px);
+    z-index: -1;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header */
+header {
+    text-align: center;
+    padding: 30px 20px;
+    background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 100%);
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    margin-bottom: 30px;
+    animation: fadeInDown 0.8s ease;
+}
+
+header h1 {
+    color: white;
+    font-size: 2.5em;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.3);
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    color: #fff;
+    font-size: 1.1em;
+    font-weight: 500;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Grid de cartas */
+main {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 40px;
+    padding: 30px;
+    animation: fadeIn 1s ease;
+}
+
+/* Tarjeta de carta */
+.carta-item {
+    cursor: pointer;
+    transition: all 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+    position: relative;
+    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.3));
+}
+
+.carta-item:hover:not(.bloqueada) {
+    transform: translateY(-15px) scale(1.1);
+    filter: drop-shadow(0 15px 30px rgba(255, 107, 157, 0.4));
+}
+
+.carta-item:active:not(.bloqueada) {
+    transform: translateY(-10px) scale(1.05);
+}
+
+/* Estados de carta */
+.carta-item.bloqueada {
+    opacity: 0.5;
+    cursor: not-allowed;
+    filter: grayscale(80%) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+}
+
+.carta-item.abierta {
+    opacity: 0.7;
+}
+
+.carta-item.abierta .carta-icono {
+    animation: none;
+}
+
+/* Icono de sobre */
+.carta-icono {
+    width: 140px;
+    height: 140px;
+    background-image: url('../imagenes/icono-carta.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    margin-bottom: 15px;
+    animation: float 3s ease-in-out infinite;
+    position: relative;
+}
+
+/* Indicador de bloqueo */
+.carta-item.bloqueada .carta-icono::after {
+    content: '🔒';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3em;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* Indicador de carta abierta */
+.carta-item.abierta .carta-icono::after {
+    content: '✓';
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background: #4caf50;
+    color: white;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5em;
+    font-weight: bold;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Indicador de carta especial */
+.carta-item.especial .carta-numero::before {
+    content: '⭐ ';
+    color: #ffd700;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+}
+
+.carta-numero {
+    font-size: 1.4em;
+    font-weight: bold;
+    color: #ff6b9d;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
+    background: rgba(255, 255, 255, 0.95);
+    padding: 8px 20px;
+    border-radius: 20px;
+    margin-bottom: 5px;
+}
+
+.carta-titulo {
+    font-size: 0.95em;
+    color: #fff;
+    text-align: center;
+    font-weight: 600;
+    text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.3);
+    padding: 5px 15px;
+    border-radius: 10px;
+    backdrop-filter: blur(5px);
+}
+
+.carta-fecha-desbloqueo {
+    font-size: 0.8em;
+    color: #ffd700;
+    text-align: center;
+    margin-top: 5px;
+    font-weight: bold;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 20px;
+    margin-top: 30px;
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+footer p {
+    color: #ff6b9d;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.progreso {
+    font-size: 0.9em !important;
+    color: #666 !important;
+    margin-top: 5px;
+    font-weight: normal !important;
+}
+
+/* Modal */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.3s ease;
+}
+
+.modal-contenido {
+    background: white;
+    border-radius: 25px;
+    padding: 40px 30px;
+    max-width: 400px;
+    width: 90%;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+    text-align: center;
+    animation: slideUp 0.3s ease;
+}
+
+.modal-icono {
+    font-size: 4em;
+    margin-bottom: 15px;
+}
+
+.modal-titulo {
+    color: #ff6b9d;
+    font-size: 1.8em;
+    margin-bottom: 15px;
+}
+
+.modal-mensaje {
+    color: #666;
+    font-size: 1.1em;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+
+.modal-btn {
+    background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 100%);
+    color: white;
+    border: none;
+    padding: 12px 40px;
+    border-radius: 25px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 107, 157, 0.4);
+}
+
+.modal-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(255, 107, 157, 0.6);
+}
+
+.modal-btn:active {
+    transform: translateY(0);
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Responsive para móviles */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2em;
+    }
+
+    .subtitle {
+        font-size: 1em;
+    }
+
+    main {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 25px;
+        padding: 20px;
+    }
+
+    .carta-item {
+        min-height: 180px;
+    }
+
+    .carta-icono {
+        width: 110px;
+        height: 110px;
+    }
+
+    .carta-numero {
+        font-size: 1.2em;
+    }
+
+    .carta-titulo {
+        font-size: 0.85em;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 10px;
+    }
+
+    header {
+        padding: 20px 15px;
+    }
+
+    header h1 {
+        font-size: 1.6em;
+    }
+
+    main {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        padding: 15px;
+    }
+
+    .carta-item {
+        min-height: 160px;
+    }
+
+    .carta-icono {
+        width: 90px;
+        height: 90px;
+    }
+
+    .carta-numero {
+        font-size: 1.1em;
+        padding: 6px 15px;
+    }
+
+    .carta-titulo {
+        font-size: 0.8em;
+        padding: 4px 10px;
+    }
+
+    .carta-item.bloqueada .carta-icono::after {
+        font-size: 2.5em;
+    }
+}
