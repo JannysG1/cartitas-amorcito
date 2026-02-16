@@ -125,8 +125,7 @@ Siempre orgullosa de ti. Te amo, mi ingeniero favorito. 💖🎉</p>
         titulo: "Cuando Estés Triste",
         emocion: "triste",
         mensaje: `
-            <p>Mi amor, sé que estás pasando por un momento difícil 💙</p>
-            <p>Si estás leyendo esto, es porque algo no está bien (o eres bien sapo y lo abriste antes) y lo primero que quiero que sepas es que no estás solo.
+            <p>Si estás leyendo esto, es porque algo no estás bien (o eres bien sapo y lo abriste antes) y lo primero que quiero que sepas es que no estás solo.
 
 Sé que hay días difíciles, días en los que todo pesa más, en los que la mente se llena de dudas y el corazón se cansa un poco. Y aunque no pueda ver exactamente lo que sientes en este momento, quiero que recuerdes algo muy importante, eres más fuerte de lo que crees, y esto también va a pasar, eres mi hombre fuerte y maravilloso.
 
